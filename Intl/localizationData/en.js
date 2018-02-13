@@ -12,6 +12,7 @@ export default {
     authorName: 'Author\'s Name',
     postTitle: 'Post Title',
     postContent: 'Post Content',
+    votes: 'Votes',
     submit: 'Submit',
     comment: `user {name} {value, plural,
     	  =0 {does not have any comments}
