@@ -23,6 +23,7 @@ export function addPostRequest(post) {
         name: post.name,
         title: post.title,
         content: post.content,
+        votes: 0,
       },
     }).then(res => dispatch(addPost(res.post)));
   };
@@ -77,6 +78,7 @@ export function editPostRequest(cuid, post) {
         name: post.name,
         title: post.title,
         content: post.content,
+        votes: post.votes,
       },
     }).then(() => dispatch(editPost(cuid, post)));
   };
@@ -89,9 +91,13 @@ export const thumbUpPost = (cuid) => {
   };
 };
 
-export function thumbUpPostRequest(cuid) {
+export function thumbUpPostRequest(cuid, post) {
   return (dispatch) => {
-    return callApi(`posts/${cuid}`, 'thumbUp').then(() => dispatch(thumbUpPost(cuid)));
+    return callApi(`posts/${cuid}`, 'put', {
+      post: {
+        votes: post.votes + 1,
+      },
+    }).then(() => dispatch(thumbUpPost(cuid)));
   };
 }
 
@@ -102,8 +108,12 @@ export const thumbDownPost = (cuid) => {
   };
 };
 
-export function thumbDownPostRequest(cuid) {
+export function thumbDownPostRequest(cuid, post) {
   return (dispatch) => {
-    return callApi(`posts/${cuid}`, 'thumbDown').then(() => dispatch(thumbDownPost(cuid)));
+    return callApi(`posts/${cuid}`, 'put', {
+      post: {
+        votes: post.votes - 1,
+      },
+    }).then(() => dispatch(thumbDownPost(cuid)));
   };
 }

@@ -55,8 +55,8 @@ export class PostDetailPage extends React.Component {
         <p className={styles['post-desc']}>{this.props.post.content}</p>
         <li>
           <span>votes: {this.props.post.votes}</span>
-          <button onClick={cuid => thumbUpPostRequest(cuid)}>Thumb up</button>
-          <button onClick={cuid => thumbDownPostRequest(cuid)}>Thumb down</button>
+          <button onClick={() => this.props.thumbUpPostRequest(this.props.post)}>Thumb up</button>
+          <button onClick={() => this.props.thumbDownPostRequest(this.props.post)}>Thumb down</button>
         </li>
       </div>
     );
@@ -85,9 +85,9 @@ PostDetailPage.need = [params => {
 function mapDispatchToProps(dispatch, props) {
   return {
     toggleEditPost: () => dispatch(toggleEditPost()),
-    editPostRequest: (post) => dispatch(editPostRequest(props.params.cuid, post)),
-    thumbUpPostRequest: cuid => dispatch(thumbUpPostRequest(cuid)),
-    thumbDownPostRequest: cuid => dispatch(thumbDownPostRequest(cuid)),
+    editPostRequest: post => dispatch(editPostRequest(props.params.cuid, post)),
+    thumbUpPostRequest: post => dispatch(thumbUpPostRequest(props.params.cuid, post)),
+    thumbDownPostRequest: post => dispatch(thumbDownPostRequest(props.params.cuid, post)),
   };
 }
 
@@ -112,11 +112,14 @@ PostDetailPage.propTypes = {
       authorName: PropTypes.string.isRequired,
       postTitle: PropTypes.string.isRequired,
       postContent: PropTypes.string.isRequired,
+      // postVotes: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
   showEditPost: PropTypes.bool.isRequired,
   toggleEditPost: PropTypes.func.isRequired,
   editPostRequest: PropTypes.func.isRequired,
+  thumbUpPostRequest: PropTypes.func.isRequired,
+  thumbDownPostRequest: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(PostDetailPage));
