@@ -89,9 +89,21 @@ export const thumbUpPost = (cuid) => {
   };
 };
 
+export function thumbUpPostRequest(cuid) {
+  return (dispatch) => {
+    return callApi(`posts/${cuid}`, 'thumbUp').then(() => dispatch(thumbUpPost(cuid)));
+  };
+}
+
 export const thumbDownPost = (cuid) => {
   return {
     type: THUMB_DOWN_POST,
     cuid,
   };
 };
+
+export function thumbDownPostRequest(cuid) {
+  return (dispatch) => {
+    return callApi(`posts/${cuid}`, 'thumbDown').then(() => dispatch(thumbDownPost(cuid)));
+  };
+}
