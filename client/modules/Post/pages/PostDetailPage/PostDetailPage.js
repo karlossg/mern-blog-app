@@ -7,7 +7,7 @@ import styles from '../../components/PostListItem/PostListItem.css';
 
 import { getPost } from '../../PostReducer';
 import { getShowEditPost } from '../../../App/AppReducer';
-import { fetchPost, editPostRequest } from '../../PostActions';
+import { fetchPost, editPostRequest, thumbUpPostRequest, thumbDownPostRequest } from '../../PostActions';
 import { toggleEditPost } from '../../../App/AppActions';
 
 export class PostDetailPage extends React.Component {
@@ -18,6 +18,7 @@ export class PostDetailPage extends React.Component {
       name: this.props.post.name,
       title: this.props.post.title,
       content: this.props.post.content,
+      votes: this.props.post.votes,
     };
   }
 
@@ -52,6 +53,11 @@ export class PostDetailPage extends React.Component {
         <h3 className={styles['post-title']}>{this.props.post.title}</h3>
         <p className={styles['author-name']}><FormattedMessage id="by" /> {this.props.post.name}</p>
         <p className={styles['post-desc']}>{this.props.post.content}</p>
+        <li>
+          <span>votes: {this.props.post.votes}</span>
+          <button onClick={cuid => thumbUpPostRequest(cuid)}>Thumb up</button>
+          <button onClick={cuid => thumbDownPostRequest(cuid)}>Thumb down</button>
+        </li>
       </div>
     );
   };
@@ -80,6 +86,8 @@ function mapDispatchToProps(dispatch, props) {
   return {
     toggleEditPost: () => dispatch(toggleEditPost()),
     editPostRequest: (post) => dispatch(editPostRequest(props.params.cuid, post)),
+    thumbUpPostRequest: cuid => dispatch(thumbUpPostRequest(cuid)),
+    thumbDownPostRequest: cuid => dispatch(thumbDownPostRequest(cuid)),
   };
 }
 
@@ -95,6 +103,7 @@ PostDetailPage.propTypes = {
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
+    votes: PropTypes.number.isRequired,
     slug: PropTypes.string.isRequired,
     cuid: PropTypes.string.isRequired,
   }).isRequired,
