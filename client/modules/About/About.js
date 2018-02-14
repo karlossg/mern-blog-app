@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 // import styles from './Home.css';
 
-const Home = () => <div><h2>Hello world!</h2></div>;
+const About = () => <div><h2>About page</h2></div>;
 
 // const mapStateToProps = (state) => {
 //   return {};
@@ -14,10 +14,10 @@ const Home = () => <div><h2>Hello world!</h2></div>;
 //   return {};
 // };
 
-Home.propTypes = {
+About.propTypes = {
 };
 
 export default connect(
   // mapStateToProps,
   // mapDispatchToProps
-)(Home);
+)(About);
